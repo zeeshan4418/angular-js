@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from './user';
+import { EnrollmentService } from './enrollment.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +11,12 @@ import { User } from './user';
 export class AppComponent {
   title = 'tdf';
   topics=['Angular JS','Vue JS','React JS'];
-  userModel = new User('', 'memon@gmail.com', 411, '', 'morning', true);
+  userModel = new User('Zeeshan', 'memon@gmail.com', 3043016411, '', 'morning', true);
   topicHasError = true;
+  submitted = false;
+  errorMsg = '';
+  constructor(private _enrollmentService: EnrollmentService){}
+
 
   validateTopic(value){
     console.log(value);
@@ -22,4 +28,13 @@ export class AppComponent {
     }
   }
 
+  onSubmit(){
+    this.submitted = true;
+    this._enrollmentService.enroll(this.userModel)
+        .subscribe(
+          data => console.log('Success !!',data),
+          error => this.errorMsg = error.statusText
+        );
+    
+  }
 }

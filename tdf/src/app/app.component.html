@@ -1,12 +1,15 @@
 <div class="container-fluid mb-5">
   <h1>Bootcamp Enrollment Form</h1>
-  <form #userForm="ngForm">
+  <div class="alert alert-danger" *ngIf="errorMsg">
+      {{ errorMsg }}
+  </div>
+  <form #userForm="ngForm" *ngIf="!submitted" (ngSubmit)="onSubmit()" novalidate>
 
-      {{ userForm.value | json }}
+      <!-- {{ userForm.value | json }}
       <hr>
-      {{ userModel | json }}
+      {{ userModel | json }} -->
 
-      <div ngModelGroup="address">
+      <!-- <div ngModelGroup="address">
         <div class="form-group">
           <label>Street</label>
           <input type="text" class="form-control" name="street" ngModel>
@@ -27,7 +30,7 @@
           <input type="text" class="form-control" name="postalCode" ngModel>
         </div>
 
-      </div>
+      </div> -->
 
       <div class="form-group">
         <label>Name</label>
@@ -44,12 +47,12 @@
 
       <div class="form-group">
         <label>Phone</label>
-        <input type="tel" #phone="ngModel" pattern="^\d{11}$"
+        <input type="tel" #phone="ngModel" pattern="^\d{10}$"
         [class.is-invalid]="phone.invalid && phone.touched" class="form-control"
         name="phone" [(ngModel)]="userModel.phone" required>
         <div *ngIf="phone.errors && (phone.invalid || phone.touched)">
           <small class="text-danger" *ngIf="phone.errors.required">Phone No is required</small>
-          <small class="text-danger" *ngIf="phone.errors.pattern">Phone No must be 11 digit</small>
+          <small class="text-danger" *ngIf="phone.errors.pattern">Phone No must be 10 digit</small>
         </div>
         <!-- <small class="text-danger" [class.d-none]="name.valid || name.untouched">Phone No is required and must be 11 digit</small> -->
       </div>
